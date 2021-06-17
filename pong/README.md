@@ -2,7 +2,7 @@
 
 ## TODO
 
- - [ ] Player input
+ - [x] Player input
  - [ ] Improve AI
  - [ ] Menu
  - [ ] Score

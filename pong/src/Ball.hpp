@@ -20,6 +20,7 @@ class Ball
     void reverseX();
     void reverseY();
     void setPosX(float x);
+    void checkCollision(Rectangle rec, int xDir, float xPos);
 
 };
 #endif

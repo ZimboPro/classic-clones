@@ -7,7 +7,7 @@ Paddle::Paddle(int x)
 	this->direction.y = 0.0f;
   this->position.y = 300;
   this->position.x = x;
-  this->speed = 50;
+  this->speed = 100;
   this->color = BLUE;
   this->rec.height = 80.0f;
   this->rec.width = 20.0f;

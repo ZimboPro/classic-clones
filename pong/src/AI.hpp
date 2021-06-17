@@ -16,5 +16,13 @@ class AI
 
     void update(float delta, Ball * ball);
 
+    Rectangle getPaddleRec() {
+      return this->paddle->rec;
+    }
+
+    float xPos() {
+      return this->paddle->position.x;
+    }
+
 };
 #endif

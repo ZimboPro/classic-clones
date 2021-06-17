@@ -13,7 +13,7 @@ Ball::Ball()
   this->size = 20.0f;
   this->position.x = 400;
   this->position.y = 300;
-  this->speed = 100;
+  this->speed = 200;
   this->direction.x = setDirection(5, 25);
   this->direction.y = setDirection(5, 25);
   this->direction = Vector2Normalize(this->direction);
@@ -62,4 +62,12 @@ void Ball::reverseY()
 void Ball::setPosX(float x)
 {
   this->position.x = x;
+}
+
+void Ball::checkCollision(Rectangle rec, int xDir, float xPos)
+{
+  if (CheckCollisionCircleRec(this->position, this->size, rec)) {
+    this->reverseX();
+    this->setPosX(static_cast<float>(xPos) + (rec.width / 2 + this->size) * static_cast<float>(xDir));
+  }
 }
