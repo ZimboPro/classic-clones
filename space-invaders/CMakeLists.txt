@@ -53,6 +53,11 @@ file(GLOB SRC src/*.cpp src/**/*.cpp)
 
 add_executable(${PROJECT_NAME} ${SRC})
 
+add_custom_command(
+  TARGET ${PROJECT_NAME} PRE_BUILD
+  COMMAND cp -r ${CMAKE_CURRENT_LIST_DIR}/assets ${CMAKE_CURRENT_BINARY_DIR}
+)
+
 target_include_directories(${PROJECT_NAME} PUBLIC
   ${raylib_SOURCE_DIR}/src
   ${spdlog_SOURCE_DIR})
