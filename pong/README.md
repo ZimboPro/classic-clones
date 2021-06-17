@@ -8,4 +8,5 @@
  - [ ] Score
  - [ ] Sound FX
  - [ ] Music
-
+ - [ ] Set rounds
+ - [ ] Pause
