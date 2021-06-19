@@ -17,6 +17,7 @@ class Paddle
     Color color;
     int speed;
     void update(float delta);
+    void reset(int x);
 
 
 };

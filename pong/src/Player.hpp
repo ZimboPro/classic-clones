@@ -21,5 +21,9 @@ class Player
       return this->paddle->position.x;
     }
 
+    void reset() {
+      this->paddle->reset(760);
+    }
+
 };
 #endif

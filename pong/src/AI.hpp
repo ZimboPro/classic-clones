@@ -24,5 +24,9 @@ class AI
       return this->paddle->position.x;
     }
 
+    void reset() {
+      this->paddle->reset(20);
+    }
+
 };
 #endif

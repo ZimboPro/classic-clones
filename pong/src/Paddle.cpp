@@ -3,16 +3,7 @@
 
 Paddle::Paddle(int x)
 {
-	this->direction.x = 0.0f;
-	this->direction.y = 0.0f;
-  this->position.y = 300;
-  this->position.x = x;
-  this->speed = 100;
-  this->color = BLUE;
-  this->rec.height = 80.0f;
-  this->rec.width = 20.0f;
-  this->rec.x = this->position.x- this->rec.width / 2;
-  this->rec.y = this->position.y - this->rec.height / 2;
+	this->reset(x);
 }
 
 Paddle::~Paddle()
@@ -35,4 +26,18 @@ void Paddle::update(float delta)
     this->position.y = this->rec.y + this->rec.height / 2;
   }
   DrawRectangleRec(this->rec, this->color);
+}
+
+void Paddle::reset(int x)
+{
+  this->direction.x = 0.0f;
+	this->direction.y = 0.0f;
+  this->position.y = 300;
+  this->position.x = x;
+  this->speed = 100;
+  this->color = BLUE;
+  this->rec.height = 80.0f;
+  this->rec.width = 20.0f;
+  this->rec.x = this->position.x- this->rec.width / 2;
+  this->rec.y = this->position.y - this->rec.height / 2;
 }

@@ -21,6 +21,8 @@ class Ball
     void reverseY();
     void setPosX(float x);
     void checkCollision(Rectangle rec, int xDir, float xPos);
+    bool isOutOfBounds(int width);
+    void reset();
 
 };
 #endif

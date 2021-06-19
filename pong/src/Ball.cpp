@@ -11,13 +11,8 @@ float setDirection(int min, int max)
 Ball::Ball()
 {
   this->size = 20.0f;
-  this->position.x = 400;
-  this->position.y = 300;
-  this->speed = 200;
-  this->direction.x = setDirection(5, 25);
-  this->direction.y = setDirection(5, 25);
-  this->direction = Vector2Normalize(this->direction);
   this->color = RED;
+  this->reset();
 }
 
 
@@ -37,14 +32,7 @@ void Ball::update(float delta)
     this->direction.y *= -1;
     this->position.y = static_cast<float>(600) - this->size;
   }
-  // TODO end round
-  if (this->position.x - this->size <= 0) {
-    this->direction.x *= -1;
-    this->position.x = this->size;
-  } else if (this->position.x + this->size >= 800) {
-    this->direction.x *= -1;
-    this->position.x = static_cast<float>(800) - this->size;
-  }
+
 
   DrawCircleV(this->position, this->size, this->color);
 }
@@ -70,4 +58,19 @@ void Ball::checkCollision(Rectangle rec, int xDir, float xPos)
     this->reverseX();
     this->setPosX(static_cast<float>(xPos) + (rec.width / 2 + this->size) * static_cast<float>(xDir));
   }
+}
+
+bool Ball::isOutOfBounds(int width)
+{
+  return ((this->position.x - this->size <= 0) || (this->position.x + this->size >= width));
+}
+
+void Ball::reset()
+{
+  this->position.x = 400;
+  this->position.y = 300;
+  this->speed = 200;
+  this->direction.x = setDirection(5, 25);
+  this->direction.y = setDirection(5, 25);
+  this->direction = Vector2Normalize(this->direction);
 }
