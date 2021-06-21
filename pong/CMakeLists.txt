@@ -12,7 +12,6 @@ find_package(raylib 3.7 QUIET) # Let CMake search for a raylib-config.cmake
 # You could change the QUIET above to REQUIRED and remove this if() clause
 # This part downloads raylib and builds it if it's not installed on your system
 if (NOT raylib_FOUND) # If there's none, fetch and build raylib
-  include(FetchContent)
 
   FetchContent_Declare(
     raylib
@@ -49,6 +48,22 @@ if(NOT spdlog_POPULATED)
   add_subdirectory(${spdlog_SOURCE_DIR} ${spdlog_BINARY_DIR})
 endif()
 
+# FetchContent_Declare(
+#   box2d
+#   # GIT_REPOSITORY https://github.com/erincatto/box2d.git
+#   # GIT_TAG        v2.4.1
+#   URL https://github.com/erincatto/box2d/archive/refs/tags/v2.4.1.zip
+# )
+
+# FetchContent_GetProperties(box2d)
+
+# if(NOT box2d_POPULATED)
+#   FetchContent_Populate(box2d)
+#   set(BOX2D_BUILD_UNIT_TESTS OFF CACHE BOOL "" FORCE)
+#   set(BOX2D_BUILD_TESTBED OFF CACHE BOOL "" FORCE)
+#   add_subdirectory(${box2d_SOURCE_DIR} ${box2d_BINARY_DIR})
+# endif()
+
 # This is the main part:
 file(GLOB SRC src/*.cpp src/**/*.cpp)
 
@@ -61,10 +76,16 @@ add_custom_command(
 
 target_include_directories(${PROJECT_NAME} PUBLIC
   ${raylib_SOURCE_DIR}/src
-  ${spdlog_SOURCE_DIR})
+  ${spdlog_SOURCE_DIR}
+  # ${box2d_SOURCE_DIR}
+)
 
 #set(raylib_VERBOSE 1)
-target_link_libraries(${PROJECT_NAME} raylib spdlog)
+target_link_libraries(${PROJECT_NAME}
+  raylib
+  spdlog
+  # box2d
+)
 
 # Checks if OSX and links appropriate frameworks (Only required on MacOS)
 if (APPLE)
