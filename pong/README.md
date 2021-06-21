@@ -3,10 +3,16 @@
 ## TODO
 
  - [x] Player input
- - [ ] Improve AI
+ - [x] Score
  - [ ] Menu
- - [ ] Score
+ - [ ] Pause
  - [ ] Sound FX
  - [ ] Music
+ - [ ] Improve AI
  - [ ] Set rounds
- - [ ] Pause
+ - [ ] PvP
+
+## Want to do
+
+- [ ] Implement physics engine (Physac or Box2d)
+- [ ] Networking
