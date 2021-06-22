@@ -25,7 +25,6 @@ void Paddle::update(float delta)
     this->rec.y = static_cast<float>(600) - this->rec.height;
     this->position.y = this->rec.y + this->rec.height / 2;
   }
-  DrawRectangleRec(this->rec, this->color);
 }
 
 void Paddle::reset(int x)
@@ -40,4 +39,9 @@ void Paddle::reset(int x)
   this->rec.width = 20.0f;
   this->rec.x = this->position.x- this->rec.width / 2;
   this->rec.y = this->position.y - this->rec.height / 2;
+}
+
+void Paddle::render()
+{
+  DrawRectangleRec(this->rec, this->color);
 }

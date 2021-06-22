@@ -23,6 +23,7 @@ class Ball
     void checkCollision(Rectangle rec, int xDir, float xPos);
     bool isOutOfBounds(int width);
     void reset();
+    void render();
 
 };
 #endif

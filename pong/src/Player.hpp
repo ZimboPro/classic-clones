@@ -25,5 +25,9 @@ class Player
       this->paddle->reset(760);
     }
 
+    void render() {
+      this->paddle->render();
+    }
+
 };
 #endif

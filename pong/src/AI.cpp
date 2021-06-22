@@ -23,3 +23,8 @@ void AI::update(float delta, Ball * ball)
   }
   this->paddle->update(delta);
 }
+
+void AI::render()
+{
+  this->paddle->render();
+}

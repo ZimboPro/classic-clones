@@ -18,6 +18,7 @@ class Paddle
     int speed;
     void update(float delta);
     void reset(int x);
+    void render();
 
 
 };

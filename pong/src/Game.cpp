@@ -2,6 +2,11 @@
 #include <spdlog/spdlog.h>
 #include <raylib.h>
 
+GameScreen Game::currentScreen = GameScreen::LOGO;
+Font Game::font = { 0 };
+Music Game::music = { 0 };
+Sound Game::fxCoin = { 0 };
+
 Game::Game()
 {
 
@@ -37,5 +42,6 @@ void Game::clean()
 
 bool Game::isRunning()
 {
+  spdlog::info(WindowShouldClose());
   return !WindowShouldClose();
 }

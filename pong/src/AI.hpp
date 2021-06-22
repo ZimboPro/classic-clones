@@ -28,5 +28,7 @@ class AI
       this->paddle->reset(20);
     }
 
+    void render();
+
 };
 #endif

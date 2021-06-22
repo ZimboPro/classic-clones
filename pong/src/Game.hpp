@@ -1,6 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <raylib.h>
+#include "screens/Screen.hpp"
+
 class Game
 {
 	private:
@@ -15,6 +18,11 @@ class Game
 		void render();
     void clean();
     bool isRunning();
+
+    static GameScreen currentScreen;
+    static Font font;
+    static Music music;
+    static Sound fxCoin;
 
 };
 #endif

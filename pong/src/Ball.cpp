@@ -32,9 +32,6 @@ void Ball::update(float delta)
     this->direction.y *= -1;
     this->position.y = static_cast<float>(600) - this->size;
   }
-
-
-  DrawCircleV(this->position, this->size, this->color);
 }
 
 void Ball::reverseX()
@@ -57,6 +54,7 @@ void Ball::checkCollision(Rectangle rec, int xDir, float xPos)
   if (CheckCollisionCircleRec(this->position, this->size, rec)) {
     this->reverseX();
     this->setPosX(static_cast<float>(xPos) + (rec.width / 2 + this->size) * static_cast<float>(xDir));
+    this->speed += 5;
   }
 }
 
@@ -73,4 +71,9 @@ void Ball::reset()
   this->direction.x = setDirection(5, 25);
   this->direction.y = setDirection(5, 25);
   this->direction = Vector2Normalize(this->direction);
+}
+
+void Ball::render()
+{
+  DrawCircleV(this->position, this->size, this->color);
 }
