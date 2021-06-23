@@ -9,9 +9,11 @@ class AI
 {
 	private:
     Paddle * paddle = new Paddle(20);
+    int _xPos = 20;
 	public:
 
 		AI();
+		AI(int xPos);
 		~AI();
 
     void update(float delta, Ball * ball);
@@ -25,7 +27,7 @@ class AI
     }
 
     void reset() {
-      this->paddle->reset(20);
+      this->paddle->reset(this->_xPos);
     }
 
     void render();

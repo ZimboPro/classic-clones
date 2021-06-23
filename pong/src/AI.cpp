@@ -6,6 +6,16 @@ AI::AI()
 
 }
 
+AI::AI(int xPos)
+{
+  if (this->paddle)
+  {
+    delete this->paddle;
+  }
+  this->paddle = new Paddle(xPos);
+  this->_xPos = xPos;
+}
+
 AI::~AI()
 {
   delete this->paddle;
