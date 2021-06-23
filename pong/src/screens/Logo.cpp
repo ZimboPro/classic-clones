@@ -123,6 +123,7 @@ void Logo::update()
 
 void Logo::draw()
 {
+  ClearBackground(RAYWHITE);
 if (state == 0)
     {
       double time = GetTime();
