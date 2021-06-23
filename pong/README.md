@@ -5,6 +5,13 @@
  - [x] Player input
  - [x] Score
  - [ ] Menu
+   - [x] Logo
+   - [x] Title
+   - [x] Menu
+   - [ ] Game
+   - [ ] Pause
+   - [ ] Options
+   - [ ] Ending
  - [ ] Pause
  - [ ] Sound FX
  - [ ] Music
