@@ -58,6 +58,7 @@ int main(int argc, char const *argv[])
   Game::music = LoadMusicStream("assets/ambient.ogg");
   spdlog::info("Load sound");
   Game::fxCoin = LoadSound("assets/coin.wav");
+  SetSoundVolume(Game::fxCoin, 0.4f);
 
   spdlog::info("Play music");
   SetMusicVolume(Game::music, 0.4f);
@@ -68,19 +69,10 @@ int main(int argc, char const *argv[])
   spdlog::info("Init Logo");
   logo.init();
 
-  double time = GetTime();
-
-  while (!IsWindowReady())
-  {
-    time = GetTime();
-    if (time > 5.0f)
-      break;
-  }
-
+  SetExitKey(KEY_NULL);
 
   while (game.isRunning())
   {
-    spdlog::info("Render");
     UpdateDrawFrame();
   }
   spdlog::info("Start clean up");
@@ -264,7 +256,7 @@ static void UpdateDrawFrame(void)
     //----------------------------------------------------------------------------------
     BeginDrawing();
 
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
 
         switch(Game::currentScreen)
         {

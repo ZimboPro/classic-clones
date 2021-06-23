@@ -42,6 +42,5 @@ void Game::clean()
 
 bool Game::isRunning()
 {
-  spdlog::info(WindowShouldClose());
   return !WindowShouldClose();
 }
