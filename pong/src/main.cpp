@@ -7,6 +7,7 @@
 #include <spdlog/spdlog.h>
 #include "screens/Logo.hpp"
 #include "screens/Title.hpp"
+#include "screens/Menu.hpp"
 #include "screens/GamePlay.hpp"
 #include "screens/Options.hpp"
 #include "screens/Ending.hpp"
@@ -41,6 +42,7 @@ static void UpdateDrawFrame(void);          // Update and Draw one frame
 
 static Logo logo;
 static Title title;
+static Menu menu;
 static GamePlay gamePlay;
 static Ending end;
 static Options options;
@@ -65,13 +67,14 @@ int main(int argc, char const *argv[])
   PlayMusicStream(Game::music);
 
   // Setup and Init first screen
-  Game::currentScreen = LOGO;
+  Game::currentScreen = TITLE;
   spdlog::info("Init Logo");
-  logo.init();
+  // logo.init();
+  title.init();
 
   SetExitKey(KEY_NULL);
 
-  while (game.isRunning())
+  while (game.isRunning() && Game::currentScreen != GameScreen::EXIT)
   {
     UpdateDrawFrame();
   }
@@ -81,6 +84,7 @@ int main(int argc, char const *argv[])
     {
         case LOGO: logo.clean(); break;
         case TITLE: title.clean(); break;
+        case MENU: menu.clean(); break;
         case GAMEPLAY: gamePlay.clean(); break;
         case ENDING: end.clean(); break;
         default: break;
@@ -110,6 +114,7 @@ static void ChangeToScreen(int screen)
     {
         case LOGO: logo.clean(); break;
         case TITLE: title.clean(); break;
+        case MENU: menu.clean(); break;
         case GAMEPLAY: gamePlay.clean(); break;
         case ENDING: end.clean(); break;
         default: break;
@@ -120,6 +125,7 @@ static void ChangeToScreen(int screen)
     {
         case LOGO: logo.init(); break;
         case TITLE: title.init(); break;
+        case MENU: menu.init(); break;
         case GAMEPLAY: gamePlay.init(); break;
         case ENDING: end.init(); break;
         default: break;
@@ -157,6 +163,7 @@ static void UpdateTransition(void)
                 case LOGO: logo.clean(); break;
                 case TITLE: title.clean(); break;
                 case OPTIONS: options.clean(); break;
+                case MENU: menu.clean(); break;
                 case GAMEPLAY: gamePlay.clean(); break;
                 case ENDING: end.clean(); break;
                 default: break;
@@ -167,6 +174,7 @@ static void UpdateTransition(void)
             {
                 case LOGO: logo.init(); break;
                 case TITLE: title.init(); break;
+                case MENU: menu.init(); break;
                 case GAMEPLAY: gamePlay.init(); break;
                 case ENDING: end.init(); break;
                 default: break;
@@ -231,6 +239,13 @@ static void UpdateDrawFrame(void)
                 if (options.finished()) TransitionToScreen(options.switchToScreen());
 
             } break;
+            case MENU:
+            {
+                menu.update();
+
+                if (menu.finished()) TransitionToScreen(menu.switchToScreen());
+
+            } break;
             case GAMEPLAY:
             {
                 gamePlay.update();
@@ -263,6 +278,7 @@ static void UpdateDrawFrame(void)
             case LOGO: logo.draw(); break;
             case TITLE: title.draw(); break;
             case OPTIONS: options.draw(); break;
+            case MENU: menu.draw(); break;
             case GAMEPLAY: gamePlay.draw(); break;
             case ENDING: end.draw(); break;
             default: break;
