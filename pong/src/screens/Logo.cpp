@@ -3,9 +3,6 @@
 
 Logo::Logo()
 {
-  this->framesCounter = 0;
-  this->finishScreen = 0;
-
   this->logoPositionX = 0;
   this->logoPositionY = 0;
 
@@ -30,7 +27,6 @@ Logo::~Logo()
 void Logo::init()
 {
     finishScreen = 0;
-    framesCounter = 0;
     lettersCount = 0;
 
     logoPositionX = GetScreenWidth()/2 - 128;
@@ -46,36 +42,49 @@ void Logo::update()
 {
     if (state == 0)                 // State 0: Small box blinking
     {
-        framesCounter++;
 
-        if (framesCounter == 80)
+        if (GetTime() > 1.35f)
         {
             state = 1;
-            framesCounter = 0;      // Reset counter... will be used later...
+            this->currentTime = GetTime();
         }
     }
     else if (state == 1)            // State 1: Top and left bars growing
     {
-        topSideRecWidth += 8;
-        leftSideRecHeight += 8;
+        if (GetTime() - this->currentTime > (1.0f / 60.0f))
+        {
+          topSideRecWidth += 8;
+          leftSideRecHeight += 8;
+          this->currentTime = GetTime();
+        }
 
-        if (topSideRecWidth == 256) state = 2;
+        if (topSideRecWidth == 256)
+        {
+          state = 2;
+          this->currentTime = GetTime();
+        }
     }
     else if (state == 2)            // State 2: Bottom and right bars growing
     {
-        bottomSideRecWidth += 8;
-        rightSideRecHeight += 8;
+        if (GetTime() - this->currentTime > (1.0f / 60.0f))
+        {
+            bottomSideRecWidth += 8;
+            rightSideRecHeight += 8;
+            this->currentTime = GetTime();
+        }
 
-        if (bottomSideRecWidth == 256) state = 3;
+        if (bottomSideRecWidth == 256)
+        {
+          state = 3;
+          this->currentTime = GetTime();
+        }
     }
     else if (state == 3)            // State 3: Letters appearing (one by one)
     {
-        framesCounter++;
-
-        if (framesCounter/10)       // Every 12 frames, one more letter!
+        if (GetTime() - this->currentTime > 0.5f)       // Every 12 frames, one more letter!
         {
             lettersCount++;
-            framesCounter = 0;
+            this->currentTime = GetTime();
         }
 
         switch (lettersCount)
@@ -93,14 +102,13 @@ void Logo::update()
         if (lettersCount >= 10)
         {
             state = 4;
-            framesCounter = 0;
+            this->currentTime = GetTime();
         }
     }
     else if (state == 4)
     {
-        framesCounter++;
 
-        if (framesCounter > 100)
+        if (GetTime() - this->currentTime > 1.8f)
         {
             alpha -= 0.02f;
 
@@ -117,7 +125,9 @@ void Logo::draw()
 {
 if (state == 0)
     {
-        if ((framesCounter/10)%2) DrawRectangle(logoPositionX, logoPositionY, 16, 16, BLACK);
+      double time = GetTime();
+      auto v = static_cast<int>(time / (1.0f/6.0f));
+        if (v % 2) DrawRectangle(logoPositionX, logoPositionY, 16, 16, BLACK);
     }
     else if (state == 1)
     {
@@ -156,7 +166,7 @@ if (state == 0)
 
         DrawText(raylib, GetScreenWidth()/2 - 44, GetScreenHeight()/2 + 48, 50, Fade(BLACK, alpha));
 
-        if (framesCounter > 20) DrawText("powered by", logoPositionX, logoPositionY - 27, 20, Fade(DARKGRAY, alpha));
+        if (GetTime() - this->currentTime > 0.34f) DrawText("powered by", logoPositionX, logoPositionY - 27, 20, Fade(DARKGRAY, alpha));
     }
 }
 

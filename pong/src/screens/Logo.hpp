@@ -6,7 +6,7 @@
 class Logo : public Screen
 {
 	private:
-    int framesCounter = 0;
+    double currentTime;
     int finishScreen = 0;
 
     int logoPositionX = 0;
