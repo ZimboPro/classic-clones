@@ -11,6 +11,7 @@
 #include "screens/GamePlay.hpp"
 #include "screens/Options.hpp"
 #include "screens/Ending.hpp"
+#include "screens/Pause.hpp"
 
 
 //----------------------------------------------------------------------------------
@@ -40,64 +41,27 @@ static void DrawTransition(void);
 
 static void UpdateDrawFrame(void);          // Update and Draw one frame
 
-static Logo logo;
-static Title title;
-static Menu menu;
-static GamePlay gamePlay;
-static Ending end;
-static Options options;
 
 int main(int argc, char const *argv[])
 {
-  Game game;
-  game.init();
-
-  InitAudioDevice();
-
-  spdlog::info("Load font");
-  // Game::font = LoadFont("assets/mecha.png");
-  spdlog::info("Load music");
-  Game::music = LoadMusicStream("assets/ambient.ogg");
-  spdlog::info("Load sound");
-  Game::fxCoin = LoadSound("assets/coin.wav");
-  SetSoundVolume(Game::fxCoin, 0.4f);
-
-  spdlog::info("Play music");
-  SetMusicVolume(Game::music, 0.4f);
-  PlayMusicStream(Game::music);
+  Game::init();
+  Game::createScreens();
 
   // Setup and Init first screen
-  Game::currentScreen = TITLE;
+  Game::currentScreen = LOGO;
   spdlog::info("Init Logo");
   // logo.init();
-  title.init();
+  Game::screens[Game::currentScreen]->init();
 
-  SetExitKey(KEY_NULL);
 
-  while (game.isRunning() && Game::currentScreen != GameScreen::EXIT)
+  while (Game::isRunning() && Game::currentScreen != GameScreen::EXIT)
   {
     UpdateDrawFrame();
   }
   spdlog::info("Start clean up");
+  Game::screens[Game::currentScreen]->clean();
 
-  switch (Game::currentScreen)
-    {
-        case LOGO: logo.clean(); break;
-        case TITLE: title.clean(); break;
-        case MENU: menu.clean(); break;
-        case GAMEPLAY: gamePlay.clean(); break;
-        case ENDING: end.clean(); break;
-        default: break;
-    }
-
-    // Unload all global loaded data (i.e. fonts) here!
-    // UnloadFont(Game::font);
-    UnloadMusicStream(Game::music);
-    UnloadSound(Game::fxCoin);
-
-    CloseAudioDevice();     // Close audio context
-
-  game.clean();
+  Game::clean();
 
   return 0;
 }
@@ -110,26 +74,10 @@ int main(int argc, char const *argv[])
 static void ChangeToScreen(int screen)
 {
     // Unload current screen
-    switch (Game::currentScreen)
-    {
-        case LOGO: logo.clean(); break;
-        case TITLE: title.clean(); break;
-        case MENU: menu.clean(); break;
-        case GAMEPLAY: gamePlay.clean(); break;
-        case ENDING: end.clean(); break;
-        default: break;
-    }
+    Game::screens[Game::currentScreen]->clean();
 
     // Init next screen
-    switch (screen)
-    {
-        case LOGO: logo.init(); break;
-        case TITLE: title.init(); break;
-        case MENU: menu.init(); break;
-        case GAMEPLAY: gamePlay.init(); break;
-        case ENDING: end.init(); break;
-        default: break;
-    }
+    Game::screens[screen]->init();
 
     Game::currentScreen = static_cast<GameScreen>(screen);
 }
@@ -158,27 +106,10 @@ static void UpdateTransition(void)
             transAlpha = 1.0f;
 
             // Unload current screen
-            switch (transFromScreen)
-            {
-                case LOGO: logo.clean(); break;
-                case TITLE: title.clean(); break;
-                case OPTIONS: options.clean(); break;
-                case MENU: menu.clean(); break;
-                case GAMEPLAY: gamePlay.clean(); break;
-                case ENDING: end.clean(); break;
-                default: break;
-            }
+            Game::screens[transFromScreen]->clean();
 
             // Load next screen
-            switch (transToScreen)
-            {
-                case LOGO: logo.init(); break;
-                case TITLE: title.init(); break;
-                case MENU: menu.init(); break;
-                case GAMEPLAY: gamePlay.init(); break;
-                case ENDING: end.init(); break;
-                default: break;
-            }
+            Game::screens[transToScreen]->init();
 
             Game::currentScreen = static_cast<GameScreen>(transToScreen);
 
@@ -216,53 +147,10 @@ static void UpdateDrawFrame(void)
 
     if (!onTransition)
     {
-        switch(Game::currentScreen)
-        {
-            case LOGO:
-            {
-                logo.update();
-
-                if (logo.finished()) TransitionToScreen(logo.switchToScreen());
-
-            } break;
-            case TITLE:
-            {
-                title.update();
-
-                if (title.finished()) TransitionToScreen(title.switchToScreen());
-
-            } break;
-            case OPTIONS:
-            {
-                options.update();
-
-                if (options.finished()) TransitionToScreen(options.switchToScreen());
-
-            } break;
-            case MENU:
-            {
-                menu.update();
-
-                if (menu.finished()) TransitionToScreen(menu.switchToScreen());
-
-            } break;
-            case GAMEPLAY:
-            {
-                gamePlay.update();
-
-                if (gamePlay.finished()) TransitionToScreen(gamePlay.switchToScreen());
-                //else if (FinishGameplayScreen() == 2) TransitionToScreen(TITLE);
-
-            } break;
-            case ENDING:
-            {
-                end.update();
-
-                if (end.finished()) TransitionToScreen(end.switchToScreen());
-
-            } break;
-            default: break;
-        }
+      Game::screens[Game::currentScreen]->update();
+      if (Game::screens[Game::currentScreen]->finished()) {
+        TransitionToScreen(Game::screens[Game::currentScreen]->switchToScreen());
+      }
     }
     else UpdateTransition();    // Update transition (fade-in, fade-out)
     //----------------------------------------------------------------------------------
@@ -273,16 +161,7 @@ static void UpdateDrawFrame(void)
 
         ClearBackground(BLACK);
 
-        switch(Game::currentScreen)
-        {
-            case LOGO: logo.draw(); break;
-            case TITLE: title.draw(); break;
-            case OPTIONS: options.draw(); break;
-            case MENU: menu.draw(); break;
-            case GAMEPLAY: gamePlay.draw(); break;
-            case ENDING: end.draw(); break;
-            default: break;
-        }
+        Game::screens[Game::currentScreen]->draw();
 
         // Draw full screen rectangle in front of everything
         if (onTransition) DrawTransition();
