@@ -1,20 +1,21 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-typedef enum GameScreen { LOGO = 0, TITLE, MENU, OPTIONS, GAMEPLAY, ENDING, EXIT } GameScreen;
+typedef enum GameScreen { LOGO = 0, TITLE, MENU, OPTIONS, GAMEPLAY, ENDING, EXIT, PAUSE } GameScreen;
 
 class Screen
 {
-	private:
-
+	protected:
+    bool screenFinished = false;
 	public:
 
-    virtual void init() = 0;
-    virtual void update() = 0;
-    virtual void draw() = 0;
-    virtual void clean() = 0;
-    virtual bool finished() = 0;
-    virtual GameScreen switchToScreen() = 0;
+    virtual void init(){};
+    virtual void update(){};
+    virtual void draw(){};
+    virtual void clean(){};
+    virtual bool finished(){ return screenFinished; };
+    virtual GameScreen switchToScreen(){return GameScreen::LOGO; };
+    virtual void updateProps(int) {}
 
 };
 #endif

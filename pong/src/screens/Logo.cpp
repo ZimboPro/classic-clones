@@ -1,5 +1,6 @@
 #include "Logo.hpp"
 #include <raylib.h>
+#include <spdlog/spdlog.h>
 
 Logo::Logo()
 {
@@ -26,6 +27,7 @@ Logo::~Logo()
 
 void Logo::init()
 {
+    spdlog::info("Logo - init");
     finishScreen = 0;
     lettersCount = 0;
 

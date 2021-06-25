@@ -58,8 +58,9 @@ void Title::draw()
   DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), t);
 
   // DrawTextEx(Game::font, "Pong", (Vector2){ 20, 10 }, Game::font.baseSize*3, 4, DARKGREEN);
-  DrawText("Pong", this->xPos, 10, 80, DARKGREEN);
-  DrawText("Press any key to enter", this->xPosMsg, 220, 20, DARKGREEN);
+  DrawText("Pong", this->xPos, 10, 80, BLACK);
+  if (static_cast<int>(GetTime() * 2.0f) % 4 != 0)
+    DrawText("Press any key to enter", this->xPosMsg, 220, 20, BLACK);
 }
 
 void Title::clean()

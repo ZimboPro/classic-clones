@@ -9,8 +9,6 @@
 class GamePlay : public Screen
 {
 	private:
-    int framesCounter;
-    int finishScreen;
     float delta;
 
     AI paddle;
@@ -20,6 +18,10 @@ class GamePlay : public Screen
     int playerScore;
 
     GameScreen switchTo;
+    bool isPaused;
+    bool displayTimer;
+    double timeDelta;
+    int time;
 	public:
 
 		GamePlay();
@@ -29,8 +31,11 @@ class GamePlay : public Screen
     void update();
     void draw();
     void clean();
-    bool finished();
     GameScreen switchToScreen();
+    void exitToMain();
+    void resume();
+    void updateProps(int code);
+
 
 };
 #endif
