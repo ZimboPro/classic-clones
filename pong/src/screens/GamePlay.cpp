@@ -16,7 +16,7 @@ GamePlay::~GamePlay()
 
 void GamePlay::init()
 {
-  spdlog::info("Game init {}", this->isPaused);
+  spdlog::info("Game init");
     if (!this->isPaused) {
       aiScore = 0;
       playerScore = 0;
@@ -100,27 +100,20 @@ GameScreen GamePlay::switchToScreen()
 
 void GamePlay::exitToMain()
 {
-  spdlog::info("Exit gameplay");
-  spdlog::info("Exit gameplay {}", this->isPaused);
   this->isPaused = false;
-  spdlog::info("Exit gameplay");
 }
 
 void GamePlay::resume()
 {
-  spdlog::info("Resume gameplay");
   this->isPaused = true;
 }
 
 void GamePlay::updateProps(int code)
 {
-  spdlog::info("Update props");
   switch (code)
   {
   case 1:
-    // this->resume();
-    spdlog::info("Resume gameplay");
-    this->isPaused = true;
+    this->resume();
     break;
   case 2:
     this->exitToMain();
