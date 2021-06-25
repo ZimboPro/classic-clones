@@ -8,12 +8,22 @@
    - [x] Logo
    - [x] Title
    - [x] Menu
-   - [ ] Game
-   - [ ] Pause
+   - [x] Game
+   - [x] Pause
    - [ ] Options
+     - [ ] Master Vol
+     - [ ] Music Vol
+     - [ ] Sound Vol
+     - [ ] Turn off Master
+     - [ ] Turn off Music
+     - [ ] Turn off Sound
    - [ ] Ending
- - [ ] Pause
+ - [x] Pause
  - [ ] Sound FX
+   - [ ] Lost point
+   - [ ] Bounce
+   - [ ] Won game
+   - [ ] Timer?
  - [ ] Music
  - [ ] Improve AI
  - [ ] Set rounds
