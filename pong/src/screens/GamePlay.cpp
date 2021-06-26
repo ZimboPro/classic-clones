@@ -2,6 +2,7 @@
 #include "../Game.hpp"
 #include <spdlog/fmt/fmt.h>
 #include <spdlog/spdlog.h>
+#include "../utils/TextHelper.hpp"
 
 GamePlay::GamePlay()
 {
@@ -25,12 +26,14 @@ void GamePlay::init()
       ball.reset();
       this->displayTimer = true;
     }
+    this->aiText.setText(fmt::format("{}", aiScore), 200, 10, 20, BLUE);
+    this->playerText.setText(fmt::format("{}", playerScore), 600, 10, 20, BLUE);
     this->screenFinished = false;
     this->isPaused = false;
     if (this->displayTimer) {
       this->time = 3;
-      this->timeDelta = GetTime();
     }
+    this->timerText.setText(fmt::format("{}", time), 400, 300, 80, DARKGREEN);
 }
 
 void GamePlay::update()
@@ -45,10 +48,10 @@ void GamePlay::update()
     }
     if (this->displayTimer)
     {
-      if (GetTime() - this->timeDelta >= 1.0f)
+      if (this->timerText.scale(1.0f, 80, 200))
       {
-        this->timeDelta = GetTime();
         this->time--;
+        this->timerText.setText(fmt::format("{}", this->time));
         if (this->time == 0) {
           this->displayTimer = false;
         }
@@ -62,10 +65,14 @@ void GamePlay::update()
       ball.checkCollision(paddle.getPaddleRec(), 1, paddle.xPos());
       ball.checkCollision(player.getPaddleRec(), -1, player.xPos());
       if (ball.isOutOfBounds(800)) {
-        if (ball.position.x < 400)
+        if (ball.position.x < 400) {
           playerScore++;
-        else
+          this->playerText.setText(fmt::format("{}", playerScore));
+        }
+        else {
           aiScore++;
+          this->aiText.setText(fmt::format("{}", aiScore));
+        }
         ball.reset();
         paddle.reset();
         player.reset();
@@ -78,13 +85,11 @@ void GamePlay::draw()
     ball.render();
     paddle.render();
     player.render();
-    DrawText(fmt::format("{}", aiScore).c_str(), 200, 10, 20, BLUE);
-    DrawText(":", 400, 10, 20, WHITE);
-    DrawText(fmt::format("{}", playerScore).c_str(), 600, 10, 20, BLUE);
+    this->aiText.render();
+    TextHelper::DrawTextPos(":", 400, 10, 20, WHITE);
+    this->playerText.render();
     if (displayTimer) {
-      const char * text = fmt::format("{}", time).c_str();
-      int width = MeasureText(text, 80) >> 1;
-      DrawText(text, 400 - width, 260, 80, DARKGREEN);
+      this->timerText.render();
     }
 }
 

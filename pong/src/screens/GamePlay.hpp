@@ -5,6 +5,7 @@
 #include "../AI.hpp"
 #include "../Player.hpp"
 #include "../Ball.hpp"
+#include "../utils/Text.hpp"
 
 class GamePlay : public Screen
 {
@@ -14,16 +15,18 @@ class GamePlay : public Screen
     AI paddle;
     Player player;
     Ball ball;
+    Text aiText;
     int aiScore;
+    Text playerText;
     int playerScore;
 
     GameScreen switchTo;
     bool isPaused;
     bool displayTimer;
-    double timeDelta;
+    Text timerText;
     int time;
-	public:
 
+	public:
 		GamePlay();
 		~GamePlay();
 
