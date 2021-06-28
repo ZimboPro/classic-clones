@@ -143,7 +143,8 @@ static void UpdateDrawFrame(void)
 {
     // Update
     //----------------------------------------------------------------------------------
-    UpdateMusicStream(Game::music);       // NOTE: Game::music keeps playing between screens
+    if (Game::playMusic)
+      UpdateMusicStream(Game::music);       // NOTE: Game::music keeps playing between screens
 
     if (!onTransition)
     {

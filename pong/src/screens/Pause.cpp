@@ -46,6 +46,7 @@ void Pause::update()
       break;
     case 1:
       this->switchTo = GameScreen::OPTIONS;
+      ((Options *)Game::screens[GameScreen::OPTIONS])->setSwitch(GameScreen::PAUSE);
       break;
     case 2:
       this->switchTo = GameScreen::MENU;

@@ -31,7 +31,8 @@ void Title::update()
     {
         //finishScreen = 1;   // OPTIONS
         finishScreen = 1;   // GAMEPLAY
-        PlaySound(Game::fxCoin);
+        if (Game::playSound)
+          PlaySound(Game::fxCoin);
     }
 
     // Game in background

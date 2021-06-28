@@ -42,7 +42,8 @@ void GamePlay::update()
     {
         this->screenFinished = true;
         switchTo = GameScreen::PAUSE;
-        PlaySound(Game::fxCoin);
+        if (Game::playSound)
+          PlaySound(Game::fxCoin);
         this->isPaused = true;
         this->displayTimer = true;
     }

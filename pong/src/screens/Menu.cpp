@@ -1,5 +1,7 @@
 #include "Menu.hpp"
 #include <raylib.h>
+#include "../Game.hpp"
+#include "Options.hpp"
 
 Menu::Menu()
 {
@@ -44,6 +46,7 @@ void Menu::update()
       break;
     case 1:
       this->screen = GameScreen::OPTIONS;
+      ((Options *)Game::screens[GameScreen::OPTIONS])->setSwitch(GameScreen::MENU);
       break;
     case 2:
       this->screen = GameScreen::EXIT;
