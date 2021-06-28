@@ -12,6 +12,16 @@
 #include "screens/Ending.hpp"
 #include "screens/Pause.hpp"
 
+enum StorageEnum
+{
+  MasterSound,
+  MusicSound,
+  FxSound,
+  MasterVol,
+  MusicVol,
+  FXVol
+};
+
 class Game
 {
 	private:
@@ -33,11 +43,20 @@ class Game
     static bool isRunning();
     static void createScreens();
     // static void loadAssets();
+    static bool getBoolStorageValue(StorageEnum key, bool defaultValue);
+    static bool setBoolStorageValue(StorageEnum key, bool value);
+    static float getFloatStorageValue(StorageEnum key, float defaultValue);
+    static float getFloatStorageValue(StorageEnum key, float defaultValue, float divideBy);
+    static bool setFloatStorageValue(StorageEnum key, float value);
 
     static GameScreen currentScreen;
     static Font font;
     static Music music;
     static Sound fxCoin;
-
+    static bool playMusic;
+    static bool playSound;
+    static float masterVol;
+    static float musicVol;
+    static float soundVol;
 };
 #endif

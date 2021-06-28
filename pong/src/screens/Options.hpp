@@ -2,12 +2,29 @@
 #define OPTIONS_H
 
 #include "Screen.hpp"
+#include "../utils/Text.hpp"
 
 class Options : public Screen
 {
 	private:
     int framesCounter;
-    int finishScreen;
+    GameScreen screen;
+    Text titleLabel;
+
+    Text musicLabel;
+    Text musicValue;
+    Text soundLabel;
+    Text soundValue;
+
+    Text masterVolLabel;
+    Text masterVolValue;
+    Text musicVolLabel;
+    Text musicVolValue;
+    Text soundVolLabel;
+    Text soundVolValue;
+
+    Text back;
+    int highlighted;
 	public:
 
 		Options();
@@ -17,8 +34,11 @@ class Options : public Screen
     void update();
     void draw();
     void clean();
-    bool finished();
     GameScreen switchToScreen();
+
+    void setSwitch(GameScreen screen) {
+      this->screen = screen;
+    }
 
 };
 #endif

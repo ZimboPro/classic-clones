@@ -8,6 +8,12 @@ Font Game::font = { 0 };
 Music Game::music = { 0 };
 Sound Game::fxCoin = { 0 };
 
+bool Game::playMusic;
+bool Game::playSound;
+float Game::masterVol;
+float Game::musicVol;
+float Game::soundVol;
+
 std::unique_ptr<Logo> Game::LogoScreen;
 std::unique_ptr<Title> Game::TitleScreen;
 std::unique_ptr<Menu> Game::MenuScreen;
@@ -29,11 +35,19 @@ void Game::init()
   // Game::font = LoadFont("assets/mecha.png");
   Game::music = LoadMusicStream("assets/ambient.ogg");
   Game::fxCoin = LoadSound("assets/coin.wav");
-  SetSoundVolume(Game::fxCoin, 0.4f);
 
+  Game::playMusic = Game::getBoolStorageValue(StorageEnum::MusicSound, true);
+  Game::playSound = Game::getBoolStorageValue(StorageEnum::FxSound, true);
+  Game::masterVol = Game::getFloatStorageValue(StorageEnum::MasterVol, 100.0f);
+  Game::musicVol = Game::getFloatStorageValue(StorageEnum::MusicVol, 100.0f);
+  Game::soundVol = Game::getFloatStorageValue(StorageEnum::FxSound, 100.0f);
+
+  SetSoundVolume(Game::fxCoin, Game::soundVol / 100.0f);
   spdlog::info("Play music");
-  SetMusicVolume(Game::music, 0.4f);
-  PlayMusicStream(Game::music);
+  SetMusicVolume(Game::music, Game::musicVol / 100.0f);
+  SetMasterVolume(Game::masterVol / 100.0f);
+  if (Game::playMusic)
+    PlayMusicStream(Game::music);
 }
 
 void Game::clear()
@@ -83,4 +97,39 @@ void Game::createScreens() {
   Game::screens[GameScreen::PAUSE] = PauseScreen.get();
   Game::ExitScreen = std::make_unique<Screen>();
   Game::screens[GameScreen::EXIT] = ExitScreen.get();
+}
+
+bool Game::getBoolStorageValue(StorageEnum key, bool defaultValue)
+{
+  unsigned int temp = LoadStorageValue(key);
+  if (temp == 0)
+    return defaultValue;
+  if (temp == 1)
+    return false;
+  return true;
+}
+
+bool Game::setBoolStorageValue(StorageEnum key, bool value)
+{
+  int v = value ? 2 : 1;
+  return SaveStorageValue(key, v);
+}
+
+float Game::getFloatStorageValue(StorageEnum key, float defaultValue)
+{
+  unsigned int temp = LoadStorageValue(key);
+  if (temp == 0)
+    return defaultValue;
+  return static_cast<float>(temp);
+}
+
+float Game::getFloatStorageValue(StorageEnum key, float defaultValue, float divideBy)
+{
+  float temp = getFloatStorageValue(key, defaultValue);
+  return defaultValue / divideBy;
+}
+
+bool Game::setFloatStorageValue(StorageEnum key, float value)
+{
+  return SaveStorageValue(key, static_cast<unsigned int>(value));
 }
