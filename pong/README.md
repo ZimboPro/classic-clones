@@ -16,7 +16,7 @@
      - [x] Sound Vol
      - [x] Turn off Music
      - [x] Turn off Sound
-   - [ ] Ending
+   - [x] Ending
  - [x] Pause
  - [ ] Sound FX
    - [ ] Lost point
