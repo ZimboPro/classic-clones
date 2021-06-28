@@ -49,7 +49,7 @@ void Menu::update()
       ((Options *)Game::screens[GameScreen::OPTIONS])->setSwitch(GameScreen::MENU);
       break;
     case 2:
-      this->screen = GameScreen::EXIT;
+      this->screen = GameScreen::ENDING;
       break;
 
     default:

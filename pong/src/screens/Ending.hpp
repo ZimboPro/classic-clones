@@ -2,12 +2,13 @@
 #define ENDING_H
 
 #include "Screen.hpp"
+#include "../utils/Text.hpp"
 
 class Ending : public Screen
 {
 	private:
-    int framesCounter;
-    int finishScreen;
+    double time;
+    Text thanks;
 	public:
 
 		Ending();
