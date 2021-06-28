@@ -10,13 +10,12 @@
    - [x] Menu
    - [x] Game
    - [x] Pause
-   - [ ] Options
-     - [ ] Master Vol
-     - [ ] Music Vol
-     - [ ] Sound Vol
-     - [ ] Turn off Master
-     - [ ] Turn off Music
-     - [ ] Turn off Sound
+   - [x] Options
+     - [x] Master Vol
+     - [x] Music Vol
+     - [x] Sound Vol
+     - [x] Turn off Music
+     - [x] Turn off Sound
    - [ ] Ending
  - [x] Pause
  - [ ] Sound FX

@@ -135,7 +135,7 @@ void Options::update()
     case 0:
       Game::playMusic = true;
       if (!IsMusicPlaying(Game::music))
-        StopMusicStream(Game::music);
+        PlayMusicStream(Game::music);
       this->musicValue.setText("On");
       Game::setBoolStorageValue(StorageEnum::MusicSound, Game::playMusic);
       break;
