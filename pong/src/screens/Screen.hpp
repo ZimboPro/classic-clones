@@ -1,7 +1,7 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-typedef enum GameScreen { LOGO = 0, TITLE, MENU, OPTIONS, GAMEPLAY, ENDING, EXIT, PAUSE } GameScreen;
+typedef enum GameScreen { LOGO = 0, TITLE, MENU, OPTIONS, GAMEPLAY, ENDING, EXIT, PAUSE, GAMEPLAYPVP } GameScreen;
 
 class Screen
 {
