@@ -6,10 +6,13 @@
 class Player
 {
 	private:
-    Paddle * paddle = new Paddle(760);;
+    Paddle * paddle;
+    KeyboardKey up;
+    KeyboardKey down;
 	public:
 
 		Player();
+		Player(int x);
 		~Player();
 
     void update(float delta);

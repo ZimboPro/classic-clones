@@ -5,7 +5,16 @@
 
 Player::Player()
 {
+  this->paddle = new Paddle(760);
+  this->up = KEY_UP;
+  this->down = KEY_DOWN;
+}
 
+Player::Player(int x)
+{
+  this->paddle = new Paddle(x);
+  this->up = KEY_W;
+  this->down = KEY_S;
 }
 
 Player::~Player()
@@ -16,10 +25,10 @@ Player::~Player()
 void Player::update(float delta)
 {
   float dir = 0.0f;
-  if (IsKeyDown(KEY_UP)) {
+  if (IsKeyDown(this->up)) {
     dir -= 1.0f;
   }
-  if (IsKeyDown(KEY_DOWN)) {
+  if (IsKeyDown(this->down)) {
     dir += 1.0f;
   }
   this->paddle->direction.y = dir;
