@@ -12,7 +12,7 @@
 #include "screens/Options.hpp"
 #include "screens/Ending.hpp"
 #include "screens/Pause.hpp"
-
+#include "screens/ScreenManager.hpp"
 
 //----------------------------------------------------------------------------------
 // Global Variables Definition (local to this module)
@@ -33,7 +33,6 @@ static int transToScreen = -1;
 //----------------------------------------------------------------------------------
 // Local Functions Declaration
 //----------------------------------------------------------------------------------
-static void ChangeToScreen(int screen);     // No transition effect
 
 static void TransitionToScreen(int screen);
 static void UpdateTransition(void);
@@ -48,18 +47,18 @@ int main(int argc, char const *argv[])
   Game::createScreens();
 
   // Setup and Init first screen
-  Game::currentScreen = LOGO;
+  ScreenManager::setCurrent(LOGO);
   spdlog::info("Init Logo");
   // logo.init();
-  Game::screens[Game::currentScreen]->init();
+  ScreenManager::getCurrentScreen()->init();
 
 
-  while (Game::isRunning() && Game::currentScreen != GameScreen::EXIT)
+  while (Game::isRunning() && ScreenManager::currentScreen() != GameScreen::EXIT)
   {
     UpdateDrawFrame();
   }
   spdlog::info("Start clean up");
-  Game::screens[Game::currentScreen]->clean();
+  ScreenManager::getCurrentScreen()->clean();
 
   Game::clean();
 
@@ -69,18 +68,6 @@ int main(int argc, char const *argv[])
 //----------------------------------------------------------------------------------
 // Module specific Functions Definition
 //----------------------------------------------------------------------------------
-
-// Change to next screen, no transition
-static void ChangeToScreen(int screen)
-{
-    // Unload current screen
-    Game::screens[Game::currentScreen]->clean();
-
-    // Init next screen
-    Game::screens[screen]->init();
-
-    Game::currentScreen = static_cast<GameScreen>(screen);
-}
 
 // Define transition to next screen
 static void TransitionToScreen(int screen)
@@ -146,14 +133,14 @@ static void UpdateDrawFrame(void)
     if (Game::playMusic)
       UpdateMusicStream(Game::music);       // NOTE: Game::music keeps playing between screens
 
-    if (!onTransition)
-    {
-      Game::screens[Game::currentScreen]->update();
-      if (Game::screens[Game::currentScreen]->finished()) {
-        TransitionToScreen(Game::screens[Game::currentScreen]->switchToScreen());
-      }
-    }
-    else UpdateTransition();    // Update transition (fade-in, fade-out)
+    // if (!onTransition)
+    // {
+      ScreenManager::getCurrentScreen()->update();
+    //   if (ScreenManager::getCurrentScreen()->finished()) {
+    //     TransitionToScreen(ScreenManager::getCurrentScreen()->switchToScreen());
+    //   }
+    // }
+    // else UpdateTransition();    // Update transition (fade-in, fade-out)
     //----------------------------------------------------------------------------------
 
     // Draw
@@ -162,10 +149,10 @@ static void UpdateDrawFrame(void)
 
         ClearBackground(BLACK);
 
-        Game::screens[Game::currentScreen]->draw();
+        ScreenManager::render();
 
         // Draw full screen rectangle in front of everything
-        if (onTransition) DrawTransition();
+        // if (onTransition) DrawTransition();
 
         //DrawFPS(10, 10);
 

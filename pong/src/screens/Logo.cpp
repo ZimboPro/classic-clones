@@ -1,6 +1,7 @@
 #include "Logo.hpp"
 #include <raylib.h>
 #include <spdlog/spdlog.h>
+#include "ScreenManager.hpp"
 
 Logo::Logo()
 {
@@ -118,6 +119,7 @@ void Logo::update()
             {
                 alpha = 0.0f;
                 finishScreen = 1;
+                ScreenManager::redirectTo(GameScreen::TITLE);
             }
         }
     }

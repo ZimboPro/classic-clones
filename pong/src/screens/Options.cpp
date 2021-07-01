@@ -2,6 +2,7 @@
 #include "../Game.hpp"
 #include <spdlog/fmt/fmt.h>
 #include <spdlog/spdlog.h>
+#include "ScreenManager.hpp"
 
 Options::Options()
 {
@@ -177,6 +178,7 @@ void Options::update()
 
   if (IsKeyPressed(KEY_ESCAPE) || (IsKeyPressed(KEY_ENTER) && this->highlighted == 5)) {
     this->screenFinished = true;
+    ScreenManager::navigateBack();
   }
 }
 

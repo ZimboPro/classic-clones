@@ -3,6 +3,7 @@
 #include "GamePlay.hpp"
 #include <raylib.h>
 #include <spdlog/spdlog.h>
+#include "ScreenManager.hpp"
 
 Pause::Pause()
 {
@@ -43,10 +44,11 @@ void Pause::update()
     {
     case 0:
       this->switchTo = GameScreen::GAMEPLAY;
+      ScreenManager::navigateBack();
       break;
     case 1:
       this->switchTo = GameScreen::OPTIONS;
-      ((Options *)Game::screens[GameScreen::OPTIONS])->setSwitch(GameScreen::PAUSE);
+      ScreenManager::navigateTo(GameScreen::PAUSE);
       break;
     case 2:
       this->switchTo = GameScreen::MENU;

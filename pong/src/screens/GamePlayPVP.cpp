@@ -8,6 +8,8 @@ GamePlayPVP::GamePlayPVP()
 {
   this->isPaused = false;
   this->displayTimer = true;
+  this->playerLeft = new Player(20);
+  this->player = new Player();
 }
 
 GamePlayPVP::~GamePlayPVP()
@@ -21,8 +23,8 @@ void GamePlayPVP::init()
     if (!this->isPaused) {
       aiScore = 0;
       playerScore = 0;
-      playerLeft.reset();
-      player.reset();
+      playerLeft->reset();
+      player->reset();
       ball.reset();
       this->displayTimer = true;
     }
@@ -61,10 +63,10 @@ void GamePlayPVP::update()
     {
       delta = GetFrameTime();
       ball.update(delta);
-      playerLeft.update(delta, &ball);
-      player.update(delta);
-      ball.checkCollision(playerLeft.getPaddleRec(), 1, playerLeft.xPos());
-      ball.checkCollision(player.getPaddleRec(), -1, player.xPos());
+      playerLeft->update(delta);
+      player->update(delta);
+      ball.checkCollision(playerLeft->getPaddleRec(), 1, playerLeft->xPos());
+      ball.checkCollision(player->getPaddleRec(), -1, player->xPos());
       if (ball.isOutOfBounds(800)) {
         if (ball.position.x < 400) {
           playerScore++;
@@ -75,8 +77,8 @@ void GamePlayPVP::update()
           this->aiText.setText(fmt::format("{}", aiScore));
         }
         ball.reset();
-        playerLeft.reset();
-        player.reset();
+        playerLeft->reset();
+        player->reset();
       }
     }
 }
@@ -84,8 +86,8 @@ void GamePlayPVP::update()
 void GamePlayPVP::draw()
 {
     ball.render();
-    playerLeft.render();
-    player.render();
+    playerLeft->render();
+    player->render();
     this->aiText.render();
     TextHelper::DrawTextPos(":", 400, 10, 20, WHITE);
     this->playerText.render();

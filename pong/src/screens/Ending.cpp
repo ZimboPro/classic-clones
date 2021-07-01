@@ -1,6 +1,7 @@
 #include "Ending.hpp"
 #include <raylib.h>
 #include "../Game.hpp"
+#include "ScreenManager.hpp"
 
 Ending::Ending()
 {
@@ -21,8 +22,10 @@ void Ending::init()
 
 void Ending::update()
 {
-  if (GetTime() - this->time > 2.0f)
+  if (GetTime() - this->time > 2.0f) {
     this->screenFinished = true;
+    ScreenManager::redirectTo(GameScreen::EXIT);
+  }
 }
 
 void Ending::draw()

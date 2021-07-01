@@ -1,9 +1,8 @@
 #include "Game.hpp"
 #include <spdlog/spdlog.h>
 #include <raylib.h>
+#include "screens/ScreenManager.hpp"
 
-Screen * Game::Game::screens[8];
-GameScreen Game::currentScreen = GameScreen::LOGO;
 Font Game::font = { 0 };
 Music Game::music = { 0 };
 Sound Game::fxCoin = { 0 };
@@ -13,15 +12,6 @@ bool Game::playSound;
 float Game::masterVol;
 float Game::musicVol;
 float Game::soundVol;
-
-std::unique_ptr<Logo> Game::LogoScreen;
-std::unique_ptr<Title> Game::TitleScreen;
-std::unique_ptr<Menu> Game::MenuScreen;
-std::unique_ptr<Options> Game::OptionsScreen;
-std::unique_ptr<GamePlay> Game::GamePlayScreen;
-std::unique_ptr<Ending> Game::EndingScreen;
-std::unique_ptr<Pause> Game::PauseScreen;
-std::unique_ptr<Screen> Game::ExitScreen;
 
 void Game::init()
 {
@@ -81,22 +71,14 @@ bool Game::isRunning()
 
 void Game::createScreens() {
   spdlog::info("Create screens");
-  Game::LogoScreen = std::make_unique<Logo>();
-  Game::screens[GameScreen::LOGO] = LogoScreen.get();
-  Game::TitleScreen = std::make_unique<Title>();
-  Game::screens[GameScreen::TITLE] = TitleScreen.get();
-  Game::MenuScreen = std::make_unique<Menu>();
-  Game::screens[GameScreen::MENU] = MenuScreen.get();
-  Game::OptionsScreen = std::make_unique<Options>();
-  Game::screens[GameScreen::OPTIONS] = OptionsScreen.get();
-  Game::GamePlayScreen = std::make_unique<GamePlay>();
-  Game::screens[GameScreen::GAMEPLAY] = GamePlayScreen.get();
-  Game::EndingScreen = std::make_unique<Ending>();
-  Game::screens[GameScreen::ENDING] = EndingScreen.get();
-  Game::PauseScreen = std::make_unique<Pause>();
-  Game::screens[GameScreen::PAUSE] = PauseScreen.get();
-  Game::ExitScreen = std::make_unique<Screen>();
-  Game::screens[GameScreen::EXIT] = ExitScreen.get();
+  ScreenManager::addScreen(new Logo(), GameScreen::LOGO);
+  ScreenManager::addScreen(new Title(), GameScreen::TITLE);
+  ScreenManager::addScreen(new Menu(), GameScreen::MENU);
+  ScreenManager::addScreen(new Options(), GameScreen::OPTIONS);
+  ScreenManager::addScreen(new GamePlay(), GameScreen::GAMEPLAY);
+  ScreenManager::addScreen(new Ending(), GameScreen::ENDING);
+  ScreenManager::addScreen(new Pause(), GameScreen::PAUSE);
+  ScreenManager::addScreen(new Screen(), GameScreen::EXIT);
 }
 
 bool Game::getBoolStorageValue(StorageEnum key, bool defaultValue)

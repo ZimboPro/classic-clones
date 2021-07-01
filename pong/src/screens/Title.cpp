@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include "../Game.hpp"
 #include <spdlog/spdlog.h>
+#include "ScreenManager.hpp"
 
 Title::Title()
 {
@@ -31,6 +32,7 @@ void Title::update()
     {
         //finishScreen = 1;   // OPTIONS
         finishScreen = 1;   // GAMEPLAY
+        ScreenManager::redirectTo(GameScreen::MENU);
         if (Game::playSound)
           PlaySound(Game::fxCoin);
     }

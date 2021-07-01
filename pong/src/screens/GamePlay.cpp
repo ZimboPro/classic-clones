@@ -3,6 +3,7 @@
 #include <spdlog/fmt/fmt.h>
 #include <spdlog/spdlog.h>
 #include "../utils/TextHelper.hpp"
+#include "ScreenManager.hpp"
 
 GamePlay::GamePlay()
 {
@@ -42,6 +43,7 @@ void GamePlay::update()
     {
         this->screenFinished = true;
         switchTo = GameScreen::PAUSE;
+        ScreenManager::navigateTo(GameScreen::PAUSE);
         if (Game::playSound)
           PlaySound(Game::fxCoin);
         this->isPaused = true;

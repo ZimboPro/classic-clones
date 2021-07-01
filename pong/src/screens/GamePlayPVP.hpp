@@ -11,8 +11,8 @@ class GamePlayPVP : public Screen
 	private:
     float delta;
 
-    Player playerLeft(20);
-    Player player;
+    Player * playerLeft;
+    Player * player;
     Ball ball;
     Text aiText;
     int aiScore;
